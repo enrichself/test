@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>测试版</title>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+
+<!--    <link rel="stylesheet" type="text/css" href="../../practice/jquery-easyui-1.8.1/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../practice/jquery-easyui-1.8.1/themes/icon.css">-->
+
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/gaodeAPI.css" />
+    <script type="text/javascript" src="../js/jQuery-v3.4.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.14&key=462cdd910cd53839b5975c4a0fd74d05&plugin=AMap.PolyEditor"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.4.0&key=462cdd910cd53839b5975c4a0fd74d05&callback=init"></script>
+
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:100%;">
+    <!--北部-->
+    <div data-options="region:'north'" style="height:50px;background: rgba(181,205,255,0.55);background-image: url('../images/head.png')">
+     <!--   <span id="HeadFont">任务指挥图</span>-->
+    </div>
+    <!--南部-->
+    <!--<div data-options="region:'south',split:true" style="height:50px;"></div>-->
+    <!--东部-->
+    <div data-options="region:'east',split:true" title="预览地图" style="width:40%;">
+
+    </div>
+    <!--西部-->
+    <div data-options="region:'west',split:true" title="我的地图样式" style="width:16%;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="图层选择" data-options="selected:true" style="padding:10px;">
+                <div id="map-features">
+                    <div class="input-item">
+                        <input type='checkbox' name='mapStyle' value='bg' checked>
+                        <span class="input-text">区域面</span>
+                    </div>
+                    <div class="input-item">
+                        <input type='checkbox' name='mapStyle' value='road' checked>
+                        <span class="input-text">道路</span>
+                    </div>
+                    <div class="input-item">
+                        <input type='checkbox' name='mapStyle' value='building' checked>
+                        <span class="input-text">建筑物</span>
+                    </div>
+                    <div class="input-item">
+                        <input type='checkbox' name='mapStyle' value='point' checked>
+                        <span class="input-text">标注</span>
+                    </div>
+                </div>
+            </div>
+            <div title="样式模板" style="padding:10px;">
+                <div id="map-styles">
+                    <div class="input-item">
+                        <input type='radio' name='mapStyle' value='normal'>
+                        <span>标准</span>
+                        <span class="input-text">normal</span>
+                    </div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='dark'><span>幻影黑</span><span class="input-text">dark</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='light'><span>月光银</span><span class="input-text">light</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='whitesmoke' ><span>远山黛</span><span class="input-text">whitesmoke</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='fresh'><span>草色青</span><span class="input-text">fresh</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='grey'><span>雅士灰</span><span class="input-text">grey</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='graffiti'><span>涂鸦</span><span class="input-text">graffiti</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='macaron'><span>马卡龙</span><span class="input-text">macaron</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='blue'><span>靛青蓝</span><span class="input-text">blue</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='darkblue'><span>极夜蓝</span><span class="input-text">darkblue</span></div>
+                    <div class="input-item"><input type='radio' name='mapStyle' value='wine'><span>酱籽</span><span class="input-text">wine</span></div>
+                </div>
+            </div>
+            <div title="绘制工具" style="padding:10px">
+                <div class="input-item"><input type="radio" name='func'  value='marker'><span class="input-text">画点</span></div>
+                <div class="input-item"><input type="radio" name='func' value='polyline'><span class="input-text">画折线</span></div>
+                <div class="input-item"><input type="radio" name='func' value='polygon'><span class="input-text">画多边形</span></div>
+                <div class="input-item"><input type="radio" name='func' value='rectangle'><span class="input-text">画矩形</span></div>
+                <div class="input-item"><input type="radio" name='func' value='circle'><span class="input-text">画圆</span></div>
+                <div class="input-item"><input type="radio" name='func'  value='origin'><span class="input-text">画起点</span></div>
+                <div class="input-item"><input type="radio" name='func'  value='destination'><span class="input-text">画终点</span></div>
+                <div class="input-item"><input type="radio" name='func'  value='situation'><span class="input-text">画态势</span></div>
+
+                <div class="input-item"> <input id="clear" type="button" class="btn" value="清除" /></div>
+                <div class="input-item"><input id="close" type="button" class="btn" value="关闭绘图" /></div>
+            </div>
+            <div title="拖拽操作" style="padding:10px">
+               <!-- <div>
+                    <div class='title'>选择模式</div>
+                    <input type='radio' name='mode' value='dragMap' checked>拖拽地图模式</input>
+                    </br>
+                    <input type='radio' name='mode' value='dragMarker'>拖拽Marker模式</input>
+                </div>
+                <div>
+                    <button id='start'>开始选点</button>
+                    <button id='stop'>关闭选点</button>
+                </div>
+                <div>
+                    <div class='title'>选址结果</div>
+                    <div class='c'>经纬度:</div>
+                    <div id='lnglat'></div>
+                    <div class='c'>地址:</div>
+                    <div id='address'></div>
+                    <div class='c'>最近的路口:</div>
+                    <div id='nearestJunction'></div>
+                    <div class='c'>最近的路:</div>
+                    <div id='nearestRoad'></div>
+                    <div class='c'>最近的POI:</div>
+                    <div id='nearestPOI'></div>
+                </div>-->
+
+                <div class="input-card" style="width: 120px">
+                    <button class="btn" onclick="polyEditor.open()" style="margin-bottom: 5px">开始编辑</button>
+                    <button class="btn" onclick="polyEditor.close()">结束编辑</button>
+                </div>
+            </div>
+            <div title="测量操作" style="padding:10px">
+                <div class="input-item"><input type="radio" name='func' value='rule'><span class="input-text">距离测量</span></div>
+                <div class="input-item"><input type="radio" name='func' value='measureArea'><span class="input-text">面积测量</span></div>
+
+
+                <div class="input-item">
+                    <input id="close1" type="button" class="btn" value="关闭" />
+                </div>
+            </div>
+            <div title="查询操作" style="padding:10px">
+
+            </div>
+        </div>
+    </div>
+    <!--中部-->
+    <div data-options="region:'center',title:'编辑地图',iconCls:'icon-ok'" id="container" class="map" >
+
+        <div id="pickerBox">
+            <input id="pickerInput" placeholder="输入关键字选取地点" />
+            <div id="poiInfo"></div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+<script src="https://webapi.amap.com/maps?v=1.4.14&key=462cdd910cd53839b5975c4a0fd74d05"></script>
+
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<!--引入绘制鼠标工具的脚本-->
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=462cdd910cd53839b5975c4a0fd74d05&plugin=AMap.MouseTool"></script>
+
+<script rel="script" src="../js/index.js"></script>
+</html>

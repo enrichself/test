@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>设置地图显示要素</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+
+        #map-features .input-item {
+            height: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container"></div>
+<div class="input-card" style="width:19rem">
+    <h4>设置地图显示要素（Features）</h4>
+    <div id="map-features">
+        <div class="input-item">
+            <input type='checkbox' name='mapStyle' value='bg' checked>
+            <span class="input-text">区域面（bg）</span>
+        </div>
+        <div class="input-item">
+            <input type='checkbox' name='mapStyle' value='road' checked>
+            <span class="input-text">道路（road）</span>
+        </div>
+        <div class="input-item">
+            <input type='checkbox' name='mapStyle' value='building' checked>
+            <span class="input-text">建筑物（building）</span>
+        </div>
+        <div class="input-item">
+            <input type='checkbox' name='mapStyle' value='point' checked>
+            <span class="input-text">标注（point）</span>
+        </div>
+    </div>
+</div>
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=462cdd910cd53839b5975c4a0fd74d05"></script>
+<script>
+    //初始化地图
+    var map = new AMap.Map('container', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        zoom: 17,
+        center: [116.408075, 39.950187],
+        features: ['bg', 'road', 'building', 'point']
+    });
+
+    //设置地图显示要素
+    function setMapFeatures() {
+        var features = [];
+        var inputs = document.querySelectorAll("#map-features input");
+        inputs.forEach(function(input) {
+            if (input.checked) {
+                features.push(input.value);
+            }
+        });
+        map.setFeatures(features);
+    }
+
+    //绑定checkbox点击事件
+    var inputs = document.querySelectorAll("#map-features input");
+    inputs.forEach(function(checkbox) {
+        checkbox.onclick = setMapFeatures;
+    });
+</script>
+</body>
+
+</html>

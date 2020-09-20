@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 原始地址：//webapi.amap.com/ui/1.0/ui/control/BasicControl/examples/index.html -->
+    <base href="//webapi.amap.com/ui/1.0/ui/control/BasicControl/examples/" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>基础控件</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container" class="container"></div>
+<script type="text/javascript" src='//webapi.amap.com/maps?v=1.4.15&key=462cdd910cd53839b5975c4a0fd74d05'></script>
+<!-- UI组件库 1.0 -->
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript">
+    //创建地图
+    var map = new AMap.Map('container');
+
+    AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+
+        //添加一个缩放控件
+        map.addControl(new BasicControl.Zoom({
+            position: 'lt'
+        }));
+
+        //缩放控件，显示Zoom值
+        map.addControl(new BasicControl.Zoom({
+            position: 'lb',
+            showZoomNum: true
+        }));
+
+        //图层切换控件
+        map.addControl(new BasicControl.LayerSwitcher({
+            position: 'rt'
+        }));
+    });
+</script>
+</body>
+
+</html>
